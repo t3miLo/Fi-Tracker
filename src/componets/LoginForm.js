@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  Container,
   Button,
   FormGroup,
   FormControl,
@@ -23,7 +22,8 @@ export class Userlogin extends Component {
     super(props, context);
 
     this.state = {
-      value: ""
+      email: "",
+      password: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -31,40 +31,71 @@ export class Userlogin extends Component {
   }
 
   handleChange(event) {
+    const name = event.target.name;
+    const value = event.target.value;
     this.setState({
-      value: event.target.value
+      [name]: value
     });
   }
 
-  handleSubmit(event) {
-    console.log("Form Value : " + this.state.value);
-  }
+  getValidationState = () => {
+    const value = this.state.password.length;
+    if (value > 10) return "success";
+    else if (value > 6) return "warning";
+    else if (value > 0) return "error";
+    return null;
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    console.log(data);
+    console.log("Email Value : " + this.state.email);
+    console.log("password Value : " + this.state.password);
+
+  };
 
   render() {
     return (
       <div id="loginForm" className="shawdow" style={background}>
-        <Form horizontal>
+        <Form horizontal onSubmit={this.handleSubmit}>
           <FormGroup controlId="formHorizontalEmail" style={padding}>
             <Col componentClass={ControlLabel} sm={2}>
               Email{" "}
             </Col>{" "}
             <Col sm={10}>
-              <FormControl type="email" placeholder="Email" />
+              <FormControl
+                type="email"
+                name="email"
+                value={this.state.value}
+                onChange={this.handleChange}
+                placeholder="Email"
+              />
             </Col>{" "}
-          </FormGroup>
-          <FormGroup controlId="formHorizontalPassword" style={padding}>
+          </FormGroup>{" "}
+          <FormGroup
+            validationState={this.getValidationState()}
+            controlId="formHorizontalPassword"
+            style={padding}>
             <Col componentClass={ControlLabel} sm={2}>
               Password{" "}
             </Col>{" "}
             <Col sm={10}>
-              <FormControl type="password" placeholder="Password" />
+              <FormControl
+                value={this.state.value}
+                onChange={this.handleChange}
+                name="password"
+                type="password"
+                placeholder="Password"
+              />
+              <FormControl.Feedback />
             </Col>{" "}
-          </FormGroup>
+          </FormGroup>{" "}
           <FormGroup>
             <Col smOffset={2} sm={10}>
               <Checkbox> Remember me </Checkbox>{" "}
             </Col>{" "}
-          </FormGroup>
+          </FormGroup>{" "}
           <FormGroup>
             <Col smOffset={2} sm={10}>
               <Button type="submit"> Sign in </Button>{" "}
