@@ -57,7 +57,7 @@ export class Userlogin extends Component {
 
   render() {
     return (
-      <div id="loginForm" className="shawdow" style={background}>
+      <div id="loginForm" className="shawdow container-fluid" style={background}>
         <Form horizontal onSubmit={this.handleSubmit}>
           <FormGroup controlId="formHorizontalEmail" style={padding}>
             <Col componentClass={ControlLabel} sm={2}>

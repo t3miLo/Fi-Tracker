@@ -1,20 +1,19 @@
 import React, { Component } from "react";
+import { BrowserRouter, Route } from "react-router-dom";
 import "./App.css";
 import { Userlogin } from "./componets/LoginForm";
+import { NavBar } from "./componets/NavBar";
 
-const centerMargin = {
-  margin: '2em auto',
-};
 
-const padding = {
-  padding: '2em'
-}
 class App extends Component {
   render() {
     return (
-      <div className="App" style={centerMargin}>
-        <Userlogin style={padding} />
-      </div>
+      <BrowserRouter>
+        <div className="container-fluid">
+          <NavBar />
+          <Route path="/login" component={Userlogin} className="text-center" />
+        </div>
+      </BrowserRouter>
     );
   }
 }
