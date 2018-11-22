@@ -17,6 +17,11 @@ const background = {
   background: "gray"
 };
 
+const mTop = {
+  marginTop: "20px",
+  background: "gray"
+};
+
 export class Userlogin extends Component {
   constructor(props, context) {
     super(props, context);
@@ -46,18 +51,17 @@ export class Userlogin extends Component {
     return null;
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
     const data = new FormData(e.target);
     console.log(data);
     console.log("Email Value : " + this.state.email);
     console.log("password Value : " + this.state.password);
-
   };
 
   render() {
     return (
-      <div id="loginForm" className="shawdow container-fluid" style={background}>
+      <div id="loginForm" className="shawdow container-fluid" style={mTop}>
         <Form horizontal onSubmit={this.handleSubmit}>
           <FormGroup controlId="formHorizontalEmail" style={padding}>
             <Col componentClass={ControlLabel} sm={2}>

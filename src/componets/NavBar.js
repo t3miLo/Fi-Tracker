@@ -1,22 +1,43 @@
 import React, { Component } from "react";
-import { Navbar, Nav, NavItem } from "react-bootstrap";
-
+import { Link } from "react-router-dom";
 
 export class NavBar extends Component {
   render() {
     return (
-      <Navbar inverse collapseOnSelect>
-        <Navbar.Header>
-          <Navbar.Brand> Fi Tracker </Navbar.Brand> <Navbar.Toggle />
-        </Navbar.Header>
-        <Navbar.Collapse>
-          <Nav pullRight>
-            <NavItem href="/dashboard">Dashboard</NavItem>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <h3 className="navbar-brand">Fi Tracker</h3>
+        {/* Hamburger button for responsive design */}
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon" />
+        </button>
 
-            <NavItem href="/login">Login</NavItem>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <Link className="nav-link" to="/">
+                Home
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/dashboard">
+                DashBoard
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/login">
+                Login
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </nav>
     );
   }
 }

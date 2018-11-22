@@ -3,7 +3,8 @@ import { BrowserRouter, Route } from "react-router-dom";
 import "./App.css";
 import { Userlogin } from "./componets/LoginForm";
 import { NavBar } from "./componets/NavBar";
-
+import { DashBoard } from "./componets/DashBoard";
+import { Home } from "./componets/Home";
 
 class App extends Component {
   render() {
@@ -11,7 +12,10 @@ class App extends Component {
       <BrowserRouter>
         <div className="container-fluid">
           <NavBar />
-          <Route path="/login" component={Userlogin} className="text-center" />
+
+          <Route path="/" exact component={Home} />
+          <Route path="/dashboard" component={DashBoard} />
+          <Route path="/login" component={Userlogin} />
         </div>
       </BrowserRouter>
     );
