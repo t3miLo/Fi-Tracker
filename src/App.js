@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
-import "./App.css";
+import "./static/App.css";
 import { Userlogin } from "./componets/LoginForm";
 import { NavBar } from "./componets/NavBar";
 import { DashBoard } from "./componets/DashBoard";
 import { Home } from "./componets/Home";
+import { Register } from "./componets/register";
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
           <Route path="/" exact component={Home} />
           <Route path="/dashboard" component={DashBoard} />
           <Route path="/login" component={Userlogin} />
+          <Route path="/register" component={Register} />
         </div>
       </BrowserRouter>
     );

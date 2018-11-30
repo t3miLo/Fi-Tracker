@@ -149,7 +149,7 @@ export class AddDebt extends Component {
                 </div>
               </div>
               <div className="form-group row float-right">
-                <div className="float-right">
+                <div>
                   <input
                     className="btn btn-primary"
                     type="submit"
