@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import "./App.css";
-import { Userlogin } from "./componets/LoginForm";
-import { NavBar } from "./componets/NavBar";
-import { DashBoard } from "./componets/DashBoard";
-import { Home } from "./componets/Home";
-import { Register } from "./componets/Register";
+import { Userlogin } from "./components/LoginForm";
+import { NavBar } from "./components/NavBar";
+import { DashBoard } from "./components/DashBoard";
+import { Home } from "./components/Home";
+import { Register } from "./components/Register";
 
 class App extends Component {
   render() {
