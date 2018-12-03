@@ -39,7 +39,7 @@ export class AddDebt extends Component {
   render() {
     return (
          
-          <div className="col-md-2 border border-dark rounded m-3">
+          <div className="col-md-4 border border-dark rounded m-3">
             <h5 className="text-center pt-3">Add your debt </h5>
             <form style={fPadding} className="align-items-center">
               {/* Name group */}

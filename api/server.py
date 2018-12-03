@@ -152,5 +152,12 @@ def addDebt():
         return jsonify({'validated': False, 'message': 'Bad Request Parameters! {}'.format(data['message'])})
 
 
+@app.route('/allDebts', methods=['GET'])
+def allDebts():
+    debts = mongo.db.debts.find()
+    debts_sanitize = json.loads(json_util.dumps(debts))
+    return jsonify(debts_sanitize)
+
+
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
