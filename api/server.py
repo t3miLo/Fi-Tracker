@@ -59,20 +59,19 @@ def auth_user():
     user_password = data['password'].encode('utf-8')
 
     user = mongo.db.users.find_one({'email': data['email']})
-    print(checkpw(user_password, user['password']))
 
     # Check if user exist in database and then verifies pw
     if user and checkpw(user_password, user['password']):
         del user['password']
         access_token = create_access_token(identity=data['email'])
         refresh_token = create_refresh_token(identity=data['email'])
-        user['token'] = access_token
-        user['refresh'] = refresh_token
+        user['access_token'] = access_token
+        user['refresh_token'] = refresh_token
         user_sanitize = json.loads(json_util.dumps(user))
-        return jsonify({'validated': True, 'data': user_sanitize}), 200
+        return jsonify({'validated': True, 'user': user_sanitize}), 200
     else:
-        return jsonify({'validated': False, 'message': 'Invalid username or password'}), 401
-
+        message = {'validated': False, 'data': 'Invalid username or Password'}
+        return jsonify(message), 401
 
 # Refresh Route
 
@@ -96,7 +95,7 @@ def unathorized_reponse(callback):
     }), 401
 
 
-# Registration Route
+# Registration data
 @app.route('/register', methods=['POST'])
 def register():
     '''  register user endpoint '''
@@ -118,7 +117,7 @@ def register():
         refresh_token = create_refresh_token(identity=data['email'])
         return jsonify({'validated': True,
                         'message': 'Logged in as {}'.format(form_data['email']),
-                        'access_toke': access_token,
+                        'access_token': access_token,
                         'refresh_token': refresh_token}), 200
 
     else:
@@ -153,10 +152,13 @@ def addDebt():
 
 
 @app.route('/allDebts', methods=['GET'])
+@jwt_required
 def allDebts():
     debts = mongo.db.debts.find()
     debts_sanitize = json.loads(json_util.dumps(debts))
     return jsonify(debts_sanitize)
+
+
 
 
 if __name__ == '__main__':

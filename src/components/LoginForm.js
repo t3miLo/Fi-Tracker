@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import {
   Button,
   FormGroup,
@@ -11,10 +12,6 @@ import {
 
 const padding = {
   padding: "10px"
-};
-
-const background = {
-  background: "gray"
 };
 
 const mTop = {
@@ -53,10 +50,20 @@ export class Userlogin extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const data = new FormData(e.target);
-    console.log(data);
-    console.log("Email Value : " + this.state.email);
-    console.log("password Value : " + this.state.password);
+    const bodyData = new FormData(e.target);
+    bodyData.set("email", this.state.email);
+    bodyData.set("password", this.state.password);
+
+    axios({
+      method: "post",
+      url: "http://0.0.0.0:5000/auth",
+      data: bodyData,
+      config: { headers: { "Content-Type": "multipart/form-data" } }
+    })
+      .then(res => localStorage.setItem('cool-jwt', res.data.user.access_token))
+      .catch(function(response) {
+        console.log("error ++++", response);
+      });
   };
 
   render() {

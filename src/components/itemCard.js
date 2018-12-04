@@ -1,15 +1,11 @@
 import React, { Component } from "react";
 import { fetchAllDebts } from "../utils/api";
 
-const cardWith = {
-  width: "18rem"
-};
-
 export class ItemCard extends Component {
   constructor(proprs) {
     super();
     this.state = {
-      debts: null
+      user: null
     };
   }
 

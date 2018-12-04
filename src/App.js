@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import { Userlogin } from "./components/LoginForm";
 import { NavBar } from "./components/NavBar";
 import { DashBoard } from "./components/DashBoard";
 import { Home } from "./components/Home";
 import { Register } from "./components/Register";
+import Authenticate from "./components/Authenticate";
 
 class App extends Component {
   render() {
@@ -13,11 +14,15 @@ class App extends Component {
       <BrowserRouter>
         <div className="container-fluid">
           <NavBar />
-
-          <Route path="/" exact component={Home} />
-          <Route path="/dashboard" component={DashBoard} />
-          <Route path="/login" component={Userlogin} />
-          <Route path="/register" component={Register} />
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/auth" component={Authenticate} />
+            <Route path="/login" component={Userlogin} />
+            <Route path="/register" component={Register} />
+            <Authenticate>
+              <Route path="/dashboard" component={DashBoard} />
+            </Authenticate>
+          </Switch>
         </div>
       </BrowserRouter>
     );
