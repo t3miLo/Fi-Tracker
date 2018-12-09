@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { getJwt } from "../helpers/jwt";
 import { withRouter } from "react-router-dom";
-import {getUser} from '../utils/api'
 import axios from "axios";
 
 class Authenticate extends Component {
@@ -14,17 +13,17 @@ class Authenticate extends Component {
   }
   componentDidMount() {
     const jwt = getJwt();
-   
+    console.log(jwt);
     if (!jwt) {
       this.props.history.push("/login");
     }
 
     axios({
-      method: "post",
-      url: "http://0.0.0.0:5000/auth",
-      config: { headers: { "Authorization": "Bear $"+{jwt} } }
+      method: "get",
+      url: "http://0.0.0.0:5000/getUser",
+      headers: { token: jwt }
     })
-      .then(res => res.setState({ user: res.data}))
+      .then(res => this.setState({ user: res.data }))
       .catch(function(response) {
         console.log("error ++++", response);
       });

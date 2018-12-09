@@ -60,7 +60,7 @@ export class Userlogin extends Component {
       data: bodyData,
       config: { headers: { "Content-Type": "multipart/form-data" } }
     })
-      .then(res => localStorage.setItem('cool-jwt', res.data.user.access_token))
+      .then(res => localStorage.setItem("cool-jwt", res.data.user.token))
       .catch(function(response) {
         console.log("error ++++", response);
       });

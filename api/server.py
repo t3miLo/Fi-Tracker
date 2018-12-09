@@ -1,12 +1,12 @@
 
 import datetime
 import json
+import jwt
 from functools import wraps
 from flask import Flask, jsonify, request
 from bson import json_util, ObjectId
 from bcrypt import hashpw, gensalt, checkpw
 from flask_pymongo import PyMongo
-import jwt
 from schema.users import validate_user
 from schema.debt import validate_debt
 
@@ -27,7 +27,6 @@ class JSONEncoder(json.JSONEncoder):
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SECRET_KEY'] = 'Jerry&Tristan'
-# app.config['JWT_SECRET_KEY'] = os.environ.get('Jerry&Tristan')
 app.config["JWT_ACCESS_TOKE_EXPIRES"] = datetime.timedelta(days=1)
 
 
@@ -42,16 +41,23 @@ mongo = PyMongo(app)
 def token_required(fn):
     @wraps(fn)
     def wrapper(*args, **kwargs):
-        token = request.headers['Token']
-        print(request.headers)
 
-        if not token:
-            return jsonify({'message': 'Token is missing!'}), 403
+        token = request.headers['token']
+
+        if token is None:
+            print(token)
+            resp = jsonify({'message': 'Token is missing!'})
+            return resp, 401
+
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'])
+
         except:
-            return jsonify({'message': 'Token is invalid'}), 403
+            resp = jsonify({'message': 'Token is invalid'})
+            return resp, 401
+
         return fn(*args, **kwargs)
+
     return wrapper
 
 
@@ -106,7 +112,7 @@ def register():
         users.insert_one(form_data)
         token = jwt.encode(
             {"user": form_data['email'], "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
-    
+
         return jsonify({'validated': True,
                         'message': 'Logged in as {}'.format(form_data['email']),
                         'token': token.decode('UTF-8')}), 200
@@ -116,7 +122,6 @@ def register():
 
 # Protected Route to add debts to database
 @app.route('/addDebt', methods=['POST'])
-@token_required
 def addDebt():
     form = request.form
     form_data = {
@@ -141,12 +146,23 @@ def addDebt():
 
 
 @app.route('/allDebts', methods=['GET'])
-@token_required
 def allDebts():
 
     debts = mongo.db.debts.find()
     debts_sanitize = json.loads(json_util.dumps(debts))
     return jsonify(debts_sanitize)
+
+
+@app.route('/getUser', methods=['GET'])
+@token_required
+def getUser():
+
+    token = request.headers['token']
+    jwt_cool = jwt.decode(token, app.config['SECRET_KEY'])
+    user = jwt_cool
+    print(user['user'])
+
+    return jsonify({'message': 'test'})
 
 
 if __name__ == '__main__':

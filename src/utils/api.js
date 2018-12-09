@@ -1,26 +1,27 @@
-import axios from 'axios';
-import {getJwt} from '../helpers/jwt'
+import axios from "axios";
+import { getJwt } from "../helpers/jwt";
 
-const serverUrl = 'http://0.0.0.0:5000';
+const serverUrl = "http://0.0.0.0:5000";
 const http = axios.create({
   baseURL: serverUrl
-})
+});
 
-const jwt = getJwt()
+const jwt = getJwt();
 
-export const fetchAllDebts = function (debts) {
-    return http.get('/allDebts')
-      .then(function (response) {
-        return response.data;
-      })
-      .catch((err) => console.log(err));
-    }
+export const fetchAllDebts = function(debts) {
+  return http
+    .get("/allDebts")
+    .then(function(response) {
+      return response.data;
+    })
+    .catch(err => console.log(err));
+};
 
- export const getUser = function(user) {
-      return http.get('/getUser', {
-        headers: {
-          Authorization : 'Bearer $'+{jwt}}
-        }).then(res => res.setState({
-          user: res.data
-        })).catch(err => {console.log(err)});
-      }
+//  export const getUser = function(user) {
+//       return http.get('/getUser', {
+//         headers: {
+//           Authorization : 'token '+{jwt}}
+//         }).then(res => this.setState({
+//           user: res.data
+//         })).catch(err => {console.log(err)});
+//       }
