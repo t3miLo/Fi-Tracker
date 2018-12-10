@@ -47,10 +47,12 @@ def token_required(fn):
         if token is None:
             print(token)
             resp = jsonify({'message': 'Token is missing!'})
-            return resp, 401
+            return resp, 403
 
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'])
+            resp = jsonify({'message': 'Token is valid!'})
+            return resp, 201
 
         except:
             resp = jsonify({'message': 'Token is invalid'})
@@ -124,6 +126,7 @@ def register():
 @app.route('/addDebt', methods=['POST'])
 def addDebt():
     form = request.form
+    print(form)
     form_data = {
         'name': form['name'],
         'totalAmount': float(form['totalAmount']),
@@ -140,9 +143,11 @@ def addDebt():
 
     if data['validated']:
         debts.insert_one(form_data)
-        return jsonify({'validated': True, 'message': 'The debt has been added!'})
+        message = jsonify({'validated': True, 'message': 'The Item has been added!'})
+        return message, 201
     else:
-        return jsonify({'validated': False, 'message': 'Bad Request Parameters! {}'.format(data['message'])})
+        message = jsonify({'validated': False, 'message': 'Bad Request Parameters! {}'.format(data['message'])})
+        return message, 400
 
 
 @app.route('/allDebts', methods=['GET'])

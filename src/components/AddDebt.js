@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Axios from "axios";
 
 
 const fPadding = {
@@ -17,12 +18,12 @@ export class AddDebt extends Component {
       name: "",
       totalAmount: "",
       interest: "",
-      type: "",
-      minPayment: ""
+      type: "Credit Card",
+      payment: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event) {
@@ -32,16 +33,38 @@ export class AddDebt extends Component {
     this.setState({
       [name]: value
     });
-
-    console.log(name, " : ", value);
   }
+
+  handleSubmit = e => {
+    e.preventDefault();
+    const itemData = new FormData(e.target);
+    itemData.set( "name", this.state.name);
+    itemData.set( "totalAmount", this.state.totalAmount);
+    itemData.set( "interest", this.state.interest);
+    itemData.set( "type", this.state.type,);
+    itemData.set( "payment", this.state.payment);
+    console.log(itemData.form);
+
+    Axios({
+      method: "post",
+      url: "http://0.0.0.0:5000/addDebt",
+      data: itemData,
+      config: { headers: { "Content-Type": "multipart/form-data" } }
+    })
+      .then(
+        res => console.log(res))
+      .catch(function(error) {
+        console.log(error.response);
+      });
+  }
+
 
   render() {
     return (
          
           <div className="col-md-4 border border-dark rounded m-3">
             <h5 className="text-center pt-3">Add your debt </h5>
-            <form style={fPadding} className="align-items-center">
+            <form style={fPadding} className="align-items-center" onSubmit={this.handleSubmit}>
               {/* Name group */}
               <div className="form-group row">
                 <label
@@ -84,14 +107,14 @@ export class AddDebt extends Component {
               {/* Total Amount group end */}
               {/* Type group */}
               <div className="form-group row">
-                <label htmlFor="debtType" className="col-sm-2 col-form-label">
+                <label htmlFor="type" className="col-sm-2 col-form-label">
                   Type
                 </label>
                 <div style={lPadding}>
                   <select
-                    id="debtType"
+                    id="type"
                     value={this.state.value}
-                    name="debtType"
+                    name="type"
                     onChange={this.handleChange}>
                     <option value="creditcard">Credit Card</option>
                     <option value="carloan">Car Loan</option>
@@ -101,24 +124,24 @@ export class AddDebt extends Component {
                 </div>
               </div>
               {/* Type group end */}
-              {/* APR group start */}
+              {/* interest group start */}
               <div className="form-group row">
-                <label htmlFor="apr" className="col-sm-2 col-form-label">
+                <label htmlFor="interest" className="col-sm-2 col-form-label">
                   APR
                 </label>
                 <div className="col-sm-10" style={lPadding}>
                   <input
                     type="text"
                     className="form-control"
-                    id="apr"
+                    id="interest"
                     placeholder="Interest"
                     value={this.state.value}
                     onChange={this.handleChange}
-                    name="apr"
+                    name="interest"
                   />
                 </div>
               </div>
-              {/* APR group end  */}
+              {/* Interest group end  */}
               {/* MonthlyPayment group start */}
               <div className="form-group row">
                 <label
@@ -129,9 +152,9 @@ export class AddDebt extends Component {
                 <div className="col-sm-10" style={lPadding}>
                   <input
                     type="number"
-                    name="monthlyPayment"
+                    name="payment"
                     className="form-control"
-                    id="monthlyPayment"
+                    id="payment"
                     placeholder="Total Due"
                     value={this.state.value}
                     onChange={this.handleChange}
@@ -150,11 +173,11 @@ export class AddDebt extends Component {
               </div>
               <div className="form-group row float-right">
                 <div>
-                  <input
+                  <button
                     className="btn btn-primary"
                     type="submit"
-                    value="add"
-                  />
+                  >
+                  Add</button>
                 </div>
               </div>
             </form>
