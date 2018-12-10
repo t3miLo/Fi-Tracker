@@ -8,14 +8,24 @@ class Authenticate extends Component {
     super(props);
 
     this.state = {
-      user: undefined
+      user: undefined,
+      redirect: false
     };
   }
+
+  // Redirect due to invalid Token or Missing Token
+  loginRedirect() {
+    this.props.history.push("/login");
+  }
+
+
+// Verfication of token to make sure it still valid 
   componentDidMount() {
     const jwt = getJwt();
-    console.log(jwt);
+    let that = this;
+
     if (!jwt) {
-      this.props.history.push("/login");
+      this.loginRedirect();
     }
 
     axios({
@@ -24,8 +34,10 @@ class Authenticate extends Component {
       headers: { token: jwt }
     })
       .then(res => this.setState({ user: res.data }))
-      .catch(function(response) {
-        console.log("error ++++", response);
+      .catch(function(error) {
+        if (error.response.status === 401) {
+          that.loginRedirect();
+        }
       });
   }
 

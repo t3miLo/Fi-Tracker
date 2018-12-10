@@ -1,12 +1,9 @@
 import axios from "axios";
-import { getJwt } from "../helpers/jwt";
 
 const serverUrl = "http://0.0.0.0:5000";
 const http = axios.create({
   baseURL: serverUrl
 });
-
-const jwt = getJwt();
 
 export const fetchAllDebts = function(debts) {
   return http
