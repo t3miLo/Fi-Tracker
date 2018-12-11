@@ -11,19 +11,6 @@ from schema.users import validate_user
 from schema.debt import validate_debt
 
 
-class JSONEncoder(json.JSONEncoder):
-    ''' extend json-encoder class'''
-
-    def default(self, o):
-        if isinstance(o, ObjectId):
-            return str(o)
-        if isinstance(o, set):
-            return list(o)
-        if isinstance(o, datetime.datetime):
-            return str(o)
-        return json.JSONEncoder.default(self, o)
-
-
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SECRET_KEY'] = 'Jerry&Tristan'
@@ -33,9 +20,7 @@ app.config["JWT_ACCESS_TOKE_EXPIRES"] = datetime.timedelta(days=1)
 # DATABASE
 app.config['MONGO_DBNAME'] = 'fi-tracker'
 app.config['MONGO_URI'] = 'mongodb://temilo:Jeremiah1010@ds111476.mlab.com:11476/fi-tracker'
-
 mongo = PyMongo(app)
-# app.json_encoder = JSONEncoder
 
 
 def token_required(fn):
@@ -142,11 +127,13 @@ def addDebt():
     data = validate_debt(form_data)
 
     if data['validated']:
-        debts.insert_one(form_data)
-        message = jsonify({'validated': True, 'message': 'The Item has been added!'})
+        # debts.insert_one(form_data)
+        message = jsonify(
+            {'validated': True, 'message': 'The Item has been added!'})
         return message, 201
     else:
-        message = jsonify({'validated': False, 'message': 'Bad Request Parameters! {}'.format(data['message'])})
+        message = jsonify(
+            {'validated': False, 'message': 'Bad Request Parameters! {}'.format(data['message'])})
         return message, 400
 
 
