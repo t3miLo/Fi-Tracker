@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { fetchAllDebts } from "../utils/api";
+// import { fetchAllDebts } from "../utils/api";
 
 export class ItemCard extends Component {
   constructor(props) {
@@ -9,34 +9,14 @@ export class ItemCard extends Component {
     };
   }
 
-  componentDidUpdate() {
-    const newItem  = this.props.itemData;
-    let debt = this.state.debts
-    if(newItem !== null){
-      debt.push(newItem)
-    }
-    
-  }
-  componentDidMount() {
-    fetchAllDebts().then(
-      function(debts) {
-        this.setState(function() {
-          return {
-            debts
-          };
-        });
-      }.bind(this)
-    );
-  }
-
   render() {
     return (
       <div className="col-md-7">
-        {!this.state.debts ? (
+        {!this.props.debts ? (
           <p>LOADING.........</p>
         ) : (
           <div className="card-columns cardDiv">
-            {this.state.debts.map(function(debt, index) {
+            {this.props.debts.map(function(debt, index) {
               return (
                 <div key={debt["_id"]["$oid"]}>
                   <div className="card bg-secondary mt-3">

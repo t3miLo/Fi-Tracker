@@ -70,7 +70,7 @@ def auth():
     if user and checkpw(user_password, user['password']):
         del user['password']
         token = jwt.encode(
-            {"user": user_email, "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
+            {"user": user_email, "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=120)}, app.config['SECRET_KEY'])
         user['token'] = token.decode('UTF-8')
         user_sanitize = json.loads(json_util.dumps(user))
         return jsonify({'validated': True, 'user': user_sanitize}), 200
@@ -127,7 +127,7 @@ def addDebt():
     data = validate_debt(form_data)
 
     if data['validated']:
-        # debts.insert_one(form_data)
+        debts.insert_one(form_data)
         message = jsonify(
             {'validated': True, 'message': 'The Item has been added!'})
         return message, 201

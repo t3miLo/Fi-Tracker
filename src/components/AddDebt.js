@@ -37,13 +37,7 @@ export class AddDebt extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { addItemCallBack } = this.props;
-    const item = {
-      name: this.state.name,
-      totalAmount: this.state.totalAmount,
-      interest: this.state.interest,
-      type: this.state.type,
-      payment: this.state.payment
-    };
+    const item = true
 
     const itemData = new FormData(e.target);
     itemData.set("name", this.state.name);
