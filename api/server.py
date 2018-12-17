@@ -4,9 +4,9 @@ import json
 import jwt
 from functools import wraps
 from flask import Flask, jsonify, request
-from bson import json_util, ObjectId
+from bson import json_util
 from bcrypt import hashpw, gensalt, checkpw
-from flask_pymongo import PyMongo
+from flask_pymongo import PyMongo, ObjectId
 from schema.users import validate_user
 from schema.debt import validate_debt
 
@@ -137,6 +137,50 @@ def addDebt():
         return message, 400
 
 
+# Route to delete items from database
+@app.route('/deleteitem', methods=['DELETE'])
+def deleteDebt():
+    debts = mongo.db.debts
+    form = request.form
+    debt = debts.find_one({'_id': ObjectId(form['id'])})
+
+    if(debt):
+        debts.delete_one(debt)
+        message = jsonify({'Deleted': True, 'message': "Item was deleted"})
+        return message, 201
+    else:
+        message = jsonify(
+            {'Deleted': False, 'message': 'No item was found with that ID'})
+        return message, 400
+
+
+# Route to delete items from database
+@app.route('/updateitem', methods=['PUT'])
+def updateItem():
+    debts = mongo.db.debts
+    form = request.form
+    item_data = {
+        '$set': {
+            'name': form['name'],
+            'totalAmount': float(form['totalAmount']),
+            'interest': float(form['interest']),
+            'type': form['type'],
+            'payment': float(form['payment']),
+        }
+    }
+    debt = debts.find_one({'_id': ObjectId(form['id'])})
+
+    if(debt):
+        debts.update_one(debt, item_data)
+        message = jsonify({'Updated': True, 'message': "Item succesfully updated"})
+        return message, 201
+    else:
+        message = jsonify(
+            {'Updated': False, 'message': 'Sorry Item could not be updated'})
+        return message, 400
+
+
+# Route to acquire all items from database
 @app.route('/allDebts', methods=['GET'])
 def allDebts():
 

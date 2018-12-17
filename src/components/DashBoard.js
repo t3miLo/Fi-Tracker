@@ -11,16 +11,16 @@ export class DashBoard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      itemUpdated: false
+      id: 0
     };
     this.handleAddItem = this.handleAddItem.bind(this);
   }
   handleAddItem(item) {
-    this.setState(function() {
-      return {
-        itemUpdated: true
-      };
-    });
+    let id = this.state.id;
+    item["_id"] = id;
+    let arr = this.state.debts;
+    arr.push(item);
+    this.setState({ debts: arr, id: id + 1 });
   }
 
   componentDidMount() {
