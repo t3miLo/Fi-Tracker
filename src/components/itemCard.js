@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-// import { fetchAllDebts } from "../utils/api";
+import UpdateButton from "./UpdateButton";
 
 export class ItemCard extends Component {
-  constructor(props) {
-    super();
-    this.state = {
-      user: null
-    };
+
+  handleOnClick = () =>{
+    console.log('item being click on')
   }
 
   render() {
@@ -27,6 +25,7 @@ export class ItemCard extends Component {
                       <div> Interest : {debt.interest} %</div>
                       <div> Payments : ${debt.payment}</div>
                     </div>
+                      <UpdateButton item={debt} onClick={() => {console.log('item click')}}/>
                   </div>
                 </div>
               );
