@@ -1,37 +1,79 @@
-import React from 'react';
+import React, { Component } from "react";
+import UpdateItem from './UpdateItem'
 
-const Modal = props => {
 
-  return(
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Recipient:</label>
-              <input type="text" class="form-control" id="recipient-name"/>>
+export class Modal extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showModal: false
+    };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.showModal !== nextProps.modalStatus) {
+      return {
+        showModal: nextProps.modalStatus
+      };
+    }
+  }
+
+  render() {
+    return (
+      <div>
+      <button
+        type="button"
+        class="btn btn-primary m-2"
+        data-toggle="modal"
+        data-target="#itemModal">
+        Update
+      </button>
+      <div
+        class="modal fade"
+        id="itemModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="itemModalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content text-center">
+            <div class="modal-header">
+              <h5
+                class="modal-title"
+                id="itemModalTitle">
+                {this.props.debt.name}
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
-            <div class="form-group">
-              <label for="message-text" class="col-form-label">Message:</label>
-              <textarea class="form-control" id="message-text"></textarea>
+            <div class="modal-body">
+              <UpdateItem item={this.props.debt}/>
             </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Send message</button>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal">
+                Close
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary">
+                Save changes
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  )
-};
+    );
+  }
+}
 
 export default Modal;

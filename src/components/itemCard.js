@@ -1,12 +1,8 @@
 import React, { Component } from "react";
-import UpdateButton from "./UpdateButton";
+import Toggle from "./ToggleRenderProps";
+import Modal from "./Modal";
 
 export class ItemCard extends Component {
-
-  handleOnClick = () =>{
-    console.log('item being click on')
-  }
-
   render() {
     return (
       <div className="col-md-7">
@@ -25,7 +21,7 @@ export class ItemCard extends Component {
                       <div> Interest : {debt.interest} %</div>
                       <div> Payments : ${debt.payment}</div>
                     </div>
-                      <UpdateButton item={debt} onClick={() => {console.log('item click')}}/>
+                    <Modal debt={debt}/>
                   </div>
                 </div>
               );
