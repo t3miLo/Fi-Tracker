@@ -35,7 +35,7 @@ def token_required(fn):
             return resp, 403
 
         try:
-            data = jwt.decode(token, app.config['SECRET_KEY'])
+            jwt.decode(token, app.config['SECRET_KEY'])
             resp = jsonify({'message': 'Token is valid!'})
             return resp, 201
 
