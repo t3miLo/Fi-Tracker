@@ -15,29 +15,28 @@ Things to do:
 Font-End
 [] Landing/Home Page
 [] Registration Page
-[x] Login Page
-[x] JWT token validation
+[x] Login Pag
+--[x] JWT token validation
 [x] AJAX calls to backend
 [x] DashBoard
-[x] add items
-[x] query items from db
-[] edit items
-[x] form completed
-[] save changes to db
-[] Remove Items
+--[x] add items
+--[x] query items from db
+--[] edit items
+--[x] form completed
+--[] save changes to db
+--[] Remove Items
 [x] created button
-[] create modal warning to confirm delete
-[] Ajax request to db to delte item from db
+--[] create modal warning to confirm delete
+--[] Ajax request to db to delte item from db
 
 Back-End
 [x] Connect to MongoDB
 [] Routes
-[x] Auth Route /w JWT
-[x] Registration Route
-[x] Add Item Route
-[x] Delete/Remove Item Route
-[x] Update/Edit Item Route
-[x] All Items Query from db Route
+--[x] Auth Route /w JWT
+--[x] Registration Route
+--[x] Delete/Remove Item Route
+--[x] Update/Edit Item Route
+--[x] All Items Query from db Route
 [x]Form Schemas for data validation
-[x] user
-[] debt
+--[x] user
+--[] debt
