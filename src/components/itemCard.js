@@ -1,19 +1,19 @@
 import React, { Component } from "react";
-import Toggle from "./ToggleRenderProps";
 import Modal from "./Modal";
+import DeleteModal from "./DeleteModal";
 
 export class ItemCard extends Component {
   render() {
     return (
-      <div className="col-md-7">
+      <div className="container-fluid col-md-auto col-lg-auto col-sm-12 col-8">
         {!this.props.debts ? (
           <p>LOADING.........</p>
         ) : (
           <div className="card-columns cardDiv">
             {this.props.debts.map(function(debt, index) {
               return (
-                <div key={debt["_id"]["$oid"]}>
-                  <div className="card bg-dark mt-3">
+                <div>
+                  <div key={debt["_id"]["$oid"]} className="card bg-dark mt-3">
                     <div className="card-header text-light"> {debt.name}</div>
                     <div className="card-body bg-info">
                       <div className="clearfix">
@@ -34,10 +34,8 @@ export class ItemCard extends Component {
                       </div>
                     </div>
                     <div className="clearfix">
-                      <button className="btn btn-danger btn-m float-left mt-2 ml-4 mr-2">
-                        Delete
-                      </button>
-                      <Modal className="float-right" debt={debt} />
+                      <DeleteModal debt={debt} />
+                      <Modal debt={debt} />
                     </div>
                   </div>
                 </div>

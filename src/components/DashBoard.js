@@ -38,7 +38,7 @@ export class DashBoard extends Component {
   render() {
     return (
       <div className="container-fluid" style={mTop}>
-        <div className="row h-100 bg-light">
+        <div className="row h-100 bg-light justify-content-center">
           <AddDebt addItemCallBack={this.handleAddItem} />
           <ItemCard
             itemUpdated={this.state.itemUpdated}

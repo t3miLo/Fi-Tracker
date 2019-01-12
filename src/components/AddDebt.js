@@ -67,7 +67,7 @@ export class AddDebt extends Component {
 
   render() {
     return (
-      <div className="col-md-4 border border-dark rounded m-3">
+      <div className="col-md-auto border border-dark rounded m-3 hcontent">
         <h5 className="text-center pt-3">Add your debt </h5>
         <form
           style={fPadding}
