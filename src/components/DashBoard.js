@@ -41,7 +41,6 @@ export class DashBoard extends Component {
         <div className="row h-100 bg-light justify-content-center">
           <AddDebt addItemCallBack={this.handleAddItem} />
           <ItemCard
-            itemUpdated={this.state.itemUpdated}
             debts={this.state.debts}
           />
         </div>

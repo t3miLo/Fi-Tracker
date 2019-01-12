@@ -6,7 +6,7 @@ export class Modal extends Component {
     super(props);
 
     this.state = {
-      showModal: false
+      showModal: false,
     };
   }
 

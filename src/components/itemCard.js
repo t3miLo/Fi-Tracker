@@ -3,6 +3,7 @@ import Modal from "./Modal";
 import DeleteModal from "./DeleteModal";
 
 export class ItemCard extends Component {
+ 
   render() {
     return (
       <div className="container-fluid col-md-auto col-lg-auto col-sm-12 col-8">
@@ -12,8 +13,8 @@ export class ItemCard extends Component {
           <div className="card-columns cardDiv">
             {this.props.debts.map(function(debt, index) {
               return (
-                <div>
-                  <div key={debt["_id"]["$oid"]} className="card bg-dark mt-3">
+                <div key={debt["_id"]["$oid"]}>
+                  <div  className="card bg-dark mt-3">
                     <div className="card-header text-light"> {debt.name}</div>
                     <div className="card-body bg-info">
                       <div className="clearfix">
