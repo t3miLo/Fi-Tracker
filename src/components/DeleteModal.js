@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import UpdateItem from "./UpdateItem";
 
-export class Modal extends Component {
+export class DeleteModal extends Component {
   constructor(props) {
     super(props);
 
@@ -20,17 +19,17 @@ export class Modal extends Component {
 
   render() {
     return (
-      <div className="float-right">
+      <div className="float-left">
         <button
           type="button"
-          className="btn btn-primary m-2"
+          className="btn btn-danger m-2"
           data-toggle="modal"
-          data-target="#itemModal">
-          Update
+          data-target="#itemModalDelete">
+          Delete
         </button>
         <div
           className="modal fade"
-          id="itemModal"
+          id="itemModalDelete"
           tabIndex="-1"
           role="dialog"
           aria-labelledby="itemModalTitle"
@@ -50,17 +49,23 @@ export class Modal extends Component {
                 </button>
               </div>
               <div className="modal-body bg-info">
-                <UpdateItem item={this.props.debt} />
+                <p>
+                  {" "}
+                  Are you sure you would like to Delete {
+                    this.props.debt.name
+                  }{" "}
+                  item?
+                </p>
               </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-dismiss="modal">
-                  Close
-                </button>
-                <button type="button" className="btn btn-primary">
-                  Save changes
+              <div className="modal-footer justify-content-between">
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    data-dismiss="modal">
+                    Cancel
+                  </button>
+                <button type="button" className="btn btn-danger">
+                  Delete
                 </button>
               </div>
             </div>
@@ -71,4 +76,4 @@ export class Modal extends Component {
   }
 }
 
-export default Modal;
+export default DeleteModal;
