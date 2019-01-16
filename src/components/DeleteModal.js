@@ -17,6 +17,13 @@ export class DeleteModal extends Component {
     }
   }
 
+  deleteItem() {
+    const {getId} = this.props
+    const itemID = this.props.debt._id.$oid;
+    getId(itemID);
+    
+  };
+
   render() {
     return (
       <div className="float-left">
@@ -58,13 +65,16 @@ export class DeleteModal extends Component {
                 </p>
               </div>
               <div className="modal-footer justify-content-between">
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    data-dismiss="modal">
-                    Cancel
-                  </button>
-                <button type="button" className="btn btn-danger">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-dismiss="modal">
+                  Cancel
+                </button>
+                <button
+                  onClick={this.deleteItem.bind(this)}
+                  type="button"
+                  className="btn btn-danger">
                   Delete
                 </button>
               </div>

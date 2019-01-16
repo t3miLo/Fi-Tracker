@@ -14,6 +14,7 @@ export class DashBoard extends Component {
       id: 0
     };
     this.handleAddItem = this.handleAddItem.bind(this);
+    // this.handleDeleteItem = this.handleDeleteItem(this);
   }
   handleAddItem(item) {
     let id = this.state.id;
@@ -22,6 +23,14 @@ export class DashBoard extends Component {
     arr.push(item);
     this.setState({ debts: arr, id: id + 1 });
   }
+
+  handleDeleteItem = id => {
+    let items = [...this.state.debts];
+    let itemId = id;
+    console.log(itemId);
+    const newItemList = items.filter(item => item._id.$oid !== itemId);
+    this.setState({ debts: newItemList });
+  };
 
   componentDidMount() {
     fetchAllDebts().then(
@@ -42,6 +51,7 @@ export class DashBoard extends Component {
           <AddDebt addItemCallBack={this.handleAddItem} />
           <ItemCard
             debts={this.state.debts}
+            deleteItemCallBack={this.handleDeleteItem}
           />
         </div>
       </div>
